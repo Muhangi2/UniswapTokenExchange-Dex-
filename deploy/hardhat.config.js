@@ -1,17 +1,16 @@
 require("@nomicfoundation/hardhat-toolbox");
-
+require("dotenv").config();
 /** @type import('hardhat/config').HardhatUserConfig */
 
-const NEXT_PUBLIC_POLYGON_MUMBAI_RPC = "https://rpc.ankr.com/polygon_mumbai";
-const NEXT_PUBLIC_PRIVATE_KEY = "YOUR_PRIVATE_KEY";
+const NEXT_PUBLIC_POLYGON_AMOY_RPC =
+  "https://polygon-amoy.g.alchemy.com/v2/2t4uLw6zkkF8B3jHSWIfyz_Gpe9znxE8";
+
 module.exports = {
-  solidity: "0.8.0",
-  defaultNetwork: "matic",
+  solidity: "0.8.19",
   networks: {
-    hardhat: {},
-    polygon_mumbai: {
-      url: NEXT_PUBLIC_POLYGON_MUMBAI_RPC,
-      accounts: [`0x${NEXT_PUBLIC_PRIVATE_KEY}`],
+    polygon_amoy: {
+      url: NEXT_PUBLIC_POLYGON_AMOY_RPC,
+      accounts: [process.env.MUMBAI_PRIVATE_KEY],
     },
   },
 };
