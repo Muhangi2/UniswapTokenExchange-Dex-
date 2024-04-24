@@ -76,7 +76,7 @@ contract DEXExchange {
         uint256 inputValue,
         uint256 outputValue
     ) internal {
-       historyIndex++;
+        historyIndex++;
         uint256 _historyId = historyIndex;
         History storage _history = history[_historyId];
 
@@ -87,5 +87,74 @@ contract DEXExchange {
         _history.inputValue = inputValue;
         _history.outputValue = outputValue;
     }
-    function swapEthToToken(){}
+    function swapEthToToken(
+        string memory tokenName
+    ) public payable returns (uint256) {
+        uint256 inputValue = msg.value;
+        uint256 outputValue = (inputValue / ethValue) * 10 ** 18;
+
+        require(tokenInstanceMap[tokenName].transfer(msg.sender, outputValue));
+        string memory etherToken = "Ether";
+
+        _transationHistory(tokenName, etherToken, inputValue, outputValue);
+        return outputValue;
+    }
+
+    function swapTokenToEth(
+        string memory tokenName,
+        uint256 tokenAmount
+    ) public returns (uint256) {
+        uint256 exactAmount = tokenAmount * 10 ** 18;
+        uint256 ethToBeTransfered = exactAmount * ethValue;
+        require(
+            address(this).balance >= ethToBeTransfered,
+            "Dex is running low,,insufficient balance"
+        );
+
+        payable(msg.sender).transfer(ethToBeTransfered);
+        require(
+            tokenInstanceMap[tokenName].transferFrom(
+                msg.sender,
+                address(this),
+                tokenAmount
+            )
+        );
+
+        string memory etherToken = "Ether";
+        _transationHistory(
+            tokenName,
+            etherToken,
+            exactAmount,
+            ethToBeTransfered
+        );
+        return ethToBeTransfered;
+    }
+    function swapTokenToToken(
+        string memory srcTokenName,
+        string memory destTokenName,
+        uint256 _amount
+    ) public {
+        require(
+            tokenInstanceMap[srcTokenName].transferFrom(
+                msg.sender,
+                address(this),
+                _amount
+            )
+        );
+        require(tokenInstanceMap[destTokenName].transfer(msg.sender, _amount));
+        _transationHistory(srcTokenName, destTokenName, _amount, _amount);
+    }
+    function getAllHistory() public view returns (History[] memory) {
+        uint256 itemCount = historyIndex;
+        uint256 currentIndex = 0;
+
+        History[] memory items = new History[](itemCount);
+        for (uint256 i = 1; i <= itemCount; i++) {
+            uint256 currentId = i + 1;
+            History storage currentItem = history[currentId];
+            items[currentIndex] = currentItem;
+            currentIndex += 1;
+        }
+        return items;
+    }
 }
