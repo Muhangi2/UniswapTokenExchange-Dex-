@@ -27,10 +27,17 @@ describe("CustomToken", function () {
     expect(ownerBalance).to.equal(1000000n * 10n ** 18n);
   });
 
-   it("Should transfer tokens between accounts", async function(){
-    const recipient=ethers.Wallet.createRandom().address;
+  it("Should transfer tokens between accounts", async function () {
+    const recipient = ethers.Wallet.createRandom().address;
     await customToken.transfer(recipient, 1000);
-    //lets check 
-   })
-
+    //lets transfer of tokens
+    const receipientBalance = await customToken.balanceOf(recipient);
+    expect(receipientBalance).to.equal(1000);
+  });
+  it("should not allow transfer when exceeding the balance", async function () {
+    const recipient = ethers.Wallet.createRandom().address;
+    await expect(
+      customToken.transfer(recipient, 10000000n * 10n ** 18n)
+    ).to.be.revertedWith("ERC20: transfer amount exceeds balance");
+  });
 });
