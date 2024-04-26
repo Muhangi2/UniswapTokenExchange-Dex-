@@ -21,7 +21,7 @@ describe("CustomToken & DexExchange", function () {
     DEXexchange = await ethers.getContractFactory("DEXExchange");
     dexexchange = await DEXexchange.deploy();
     await dexexchange.deployed();
-    console.log("DEXExchange deployed to:", dexexchange);
+    // console.log("DEXExchange deployed to:", dexexchange);
   });
 
   describe("CustomToken", function () {
@@ -50,5 +50,13 @@ describe("CustomToken & DexExchange", function () {
     });
   });
 
-  describe("DexExchange", function () {});
+  describe("DexExchange", function () {
+    it("it should deploy with defaults tokens", async function () {
+      for (let i = 0; i < dexexchange.tokens.length; i++) {
+        expect(await dexexchange.getName(dexexchange.tokens[i])).to.equal(dexexchange.tokens[i]);
+      }
+    });
+  });
+
+  
 });
