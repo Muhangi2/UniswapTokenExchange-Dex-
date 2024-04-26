@@ -155,6 +155,6 @@ contract DEXExchange {
             items[currentIndex] = currentItem;
             currentIndex += 1;
         }
-        return items;
+        return  items;
     }
 }
