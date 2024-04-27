@@ -91,7 +91,7 @@ contract DEXExchange {
         string memory tokenName
     ) public payable returns (uint256) {
         uint256 inputValue = msg.value;
-        uint256 outputValue = (inputValue / ethValue) * 10 ** 18;
+        uint256 outputValue = (inputValue / ethValue) ;
 
         require(tokenInstanceMap[tokenName].transfer(msg.sender, outputValue));
         string memory etherToken = "Ether";
