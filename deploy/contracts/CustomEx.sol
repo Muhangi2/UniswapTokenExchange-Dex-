@@ -26,7 +26,7 @@ contract DEXExchange {
     ];
 
     mapping(string => ERC20) public tokenInstanceMap;
-    uint256 ethValue = 1000000000000000000;
+    uint256 ethValue = 100;
 
     struct History {
         uint256 historyId;
@@ -91,7 +91,7 @@ contract DEXExchange {
         string memory tokenName
     ) public payable returns (uint256) {
         uint256 inputValue = msg.value;
-        uint256 outputValue = (inputValue / ethValue) ;
+        uint256 outputValue = (inputValue * 10 ** 18) / ethValue;
 
         require(tokenInstanceMap[tokenName].transfer(msg.sender, outputValue));
         string memory etherToken = "Ether";

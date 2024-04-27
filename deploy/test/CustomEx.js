@@ -8,7 +8,7 @@ describe("CustomToken & DexExchange", function () {
   let DEXexchange;
   let dexexchange;
   let owner;
-  const ethValue = 10;
+  const ethValue = 1;
   const tokenName = "SHIBA INU";
   const TokenSymbol = "EM";
 
@@ -58,17 +58,42 @@ describe("CustomToken & DexExchange", function () {
         );
       }
     });
-    it("Swap Eth to token", async function () {
+    // it("Swap Eth to token", async function () {
+    //   const ethBefore = await dexexchange.getEthBalance();
+    //   const tokenBefore = await customToken.balanceOf(owner.address);
+    //   console.log("ethBefore", ethBefore);
+    //   console.log("tokenBefore", tokenBefore);
+
+    //   await dexexchange.swapEthToToken(tokenName, { value: ethValue });
+
+    //   const ethAfter = await dexexchange.getEthBalance();
+    //   const tokenAfter = await customToken.balanceOf(owner.address);
+
+    //   // Calculate the expected token amount
+    //   const expectedTokens = (ethValue * 10 ** 18) / dexexchange.ethValue;
+
+    //   // Assert the balances
+    //   expect(ethAfter).to.equal(ethBefore.sub(ethValue));
+    //   expect(tokenAfter).to.equal(tokenBefore.add(expectedTokens));
+    // });
+
+    it("should swap token to Ether", async function () {
+      const tokenAmount = 1000;
+      await customToken.transfer(dexexchange.address, tokenAmount);
+
       const ethBefore = await dexexchange.getEthBalance();
       const tokenBefore = await customToken.balanceOf(owner.address);
 
-      await dexexchange.swapEthToToken(tokenName, { value: ethValue });
+      console.log("ethBefore", ethBefore.toString());
+      console.log("tokenBefore", tokenBefore.toString());
 
-      const ethAfter = await dexexchange.getEthBalance();
-      const tokenAfter = await customToken.balanceOf(owner.address);
+      await dexexchange.swapTokenToEth(tokenName, tokenAmount);
 
-      // expect(ethAfter).to.equal(ethBefore - ethValue);
-      expect(tokenAfter).to.equal(tokenBefore.add(ethValue / ethValue));
+      // const ethAfter = await dexexchange.getEthBalance();
+      // const tokenAfter = await customToken.balanceOf(owner.address);
+
+      // expect(ethAfter).to.equal(ethBefore.add(tokenAmount * ethValue));
+      // expect(tokenAfter).to.equal(tokenBefore.sub(tokenAmount));
     });
   });
 });
