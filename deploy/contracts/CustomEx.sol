@@ -4,6 +4,8 @@ pragma solidity ^0.8.0;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
+import "hardhat/console.sol";
+
 contract CustomToken is ERC20 {
     constructor(
         string memory tokenName,
@@ -26,7 +28,7 @@ contract DEXExchange {
     ];
 
     mapping(string => ERC20) public tokenInstanceMap;
-    uint256 ethValue = 100;
+    uint256 ethValue = 1000000000;
 
     struct History {
         uint256 historyId;
@@ -41,6 +43,7 @@ contract DEXExchange {
 
     //constructor to create the the tokens by default
     constructor() {
+    
         for (uint256 i = 0; i < tokens.length; i++) {
             CustomToken token = new CustomToken(tokens[i], tokens[i]);
             tokenInstanceMap[tokens[i]] = token;
@@ -93,11 +96,13 @@ contract DEXExchange {
         uint256 inputValue = msg.value;
         uint256 outputValue = (inputValue * 10 ** 18) / ethValue;
 
+       console.log("Ether to Token",outputValue);
         require(tokenInstanceMap[tokenName].transfer(msg.sender, outputValue));
         string memory etherToken = "Ether";
 
         _transationHistory(tokenName, etherToken, inputValue, outputValue);
         return outputValue;
+        
     }
 
     function swapTokenToEth(
@@ -105,7 +110,7 @@ contract DEXExchange {
         uint256 tokenAmount
     ) public returns (uint256) {
         uint256 exactAmount = tokenAmount * 10 ** 18;
-        uint256 ethToBeTransfered = exactAmount * ethValue;
+        uint256 ethToBeTransfered = exactAmount / ethValue;
         require(
             address(this).balance >= ethToBeTransfered,
             "Dex is running low,,insufficient balance"
