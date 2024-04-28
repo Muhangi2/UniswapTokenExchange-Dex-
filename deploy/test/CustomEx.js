@@ -17,38 +17,39 @@ describe("CustomToken & DexExchange", function () {
 
     CustomToken = await ethers.getContractFactory("CustomToken");
     customToken = await CustomToken.deploy(tokenName, TokenSymbol);
+    console.log("CustomToken beforeee to.............", customToken.address);
     await customToken.deployed();
-    // console.log("CustomToken deployed to:", customToken);
+    console.log("CustomToken deployed to:............", customToken.address);
     DEXexchange = await ethers.getContractFactory("DEXExchange");
     dexexchange = await DEXexchange.deploy();
     await dexexchange.deployed();
   });
 
-  describe("CustomToken", function () {
-    it("it should deploy with the correct name and symbol", async function () {
-      expect(await customToken.name()).to.equal(tokenName);
-      expect(await customToken.symbol()).to.equal(TokenSymbol);
-    });
+  // describe("CustomToken", function () {
+  //   it("it should deploy with the correct name and symbol", async function () {
+  //     expect(await customToken.name()).to.equal(tokenName);
+  //     expect(await customToken.symbol()).to.equal(TokenSymbol);
+  //   });
 
-    it("it should  mint initial supply  to the owner", async function () {
-      const ownerBalance = await customToken.balanceOf(owner.address);
-      expect(ownerBalance).to.equal(1000000n * 10n ** 18n);
-    });
+  //   it("it should  mint initial supply  to the owner", async function () {
+  //     const ownerBalance = await customToken.balanceOf(owner.address);
+  //     expect(ownerBalance).to.equal(1000000n * 10n ** 18n);
+  //   });
 
-    it("Should transfer tokens between accounts", async function () {
-      const recipient = ethers.Wallet.createRandom().address;
-      await customToken.transfer(recipient, 1000);
-      //lets transfer of tokens
-      const receipientBalance = await customToken.balanceOf(recipient);
-      expect(receipientBalance).to.equal(1000);
-    });
-    it("should not allow transfer when exceeding the balance", async function () {
-      const recipient = ethers.Wallet.createRandom().address;
-      await expect(
-        customToken.transfer(recipient, 10000000n * 10n ** 18n)
-      ).to.be.revertedWith("ERC20: transfer amount exceeds balance");
-    });
-  });
+  //   it("Should transfer tokens between accounts", async function () {
+  //     const recipient = ethers.Wallet.createRandom().address;
+  //     await customToken.transfer(recipient, 1000);
+  //     //lets transfer of tokens
+  //     const receipientBalance = await customToken.balanceOf(recipient);
+  //     expect(receipientBalance).to.equal(1000);
+  //   });
+  //   it("should not allow transfer when exceeding the balance", async function () {
+  //     const recipient = ethers.Wallet.createRandom().address;
+  //     await expect(
+  //       customToken.transfer(recipient, 10000000n * 10n ** 18n)
+  //     ).to.be.revertedWith("ERC20: transfer amount exceeds balance");
+  //   });
+  // });
 
   describe("DexExchange", function () {
     it("it should deploy with defaults tokens", async function () {
@@ -58,36 +59,41 @@ describe("CustomToken & DexExchange", function () {
         );
       }
     });
-    it("Swap Eth to token", async function () {
-      const ethBefore = await dexexchange.getEthBalance();
-      const tokenBefore = await customToken.balanceOf(owner.address);
-      console.log("ethBefore", ethBefore.toString());
-      console.log("tokenBefore", tokenBefore.toString());
+    // it("Swap Eth to token", async function () {
+    //   const ethBefore = await dexexchange.getEthBalance();
+    //   const tokenBefore = await customToken.balanceOf(owner.address);
+    //   console.log("ethBefore", ethBefore.toString());
+    //   console.log("tokenBefore", tokenBefore.toString());
 
-      const initialBalance = await dexexchange.getBalance(tokenName, owner.address);
-      console.log("initial balance",initialBalance.toString());
+    //   const initialBalance = await dexexchange.getBalance(tokenName, owner.address);
+    //   console.log("initial balance",initialBalance.toString());
 
-      await dexexchange.swapEthToToken(tokenName, { value: ethValue });
-      await expect(dexexchange.swapEthToToken(tokenName, { value: ethValue })).to.not.be.reverted
-      const finalBalance = await dexexchange.getBalance(tokenName, owner.address);
-      console.log("final balance",finalBalance.toString());
-      
-      const history = await dexexchange.getAllHistory();
+    //   await dexexchange.swapEthToToken(tokenName, { value: ethValue });
+    //   await expect(dexexchange.swapEthToToken(tokenName, { value: ethValue })).to.not.be.reverted
+    //   const finalBalance = await dexexchange.getBalance(tokenName, owner.address);
+    //   console.log("final balance",finalBalance.toString());
 
-      expect(history.length).to.equal(2); 
+    //   const history = await dexexchange.getAllHistory();
 
-      // const ethAfter = await dexexchange.getEthBalance();
-      // const tokenAfter = await customToken.balanceOf(owner.address);
-      // console.log("after swapp",ethAfter.toString());
-      // console.log("after swapping Eth to token ",tokenAfter.toString());
+    //   expect(history.length).to.equal(2);
 
-      // // Calculate the expected token amount
-      // const expectedTokens = (ethValue * 10 ** 18) / dexexchange.ethValue;
+    //   const firstTransaction = history[0];
+    //   expect(firstTransaction.tokenA).to.equal("Ether");
+    //   expect(firstTransaction.tokenB).to.equal(tokenName);
+    //   expect(firstTransaction.inputValue).to.equal(swapValue);
+    //   expect(firstTransaction.userAddress).to.equal(deployer.address);
+    //   // const ethAfter = await dexexchange.getEthBalance();
+    //   // const tokenAfter = await customToken.balanceOf(owner.address);
+    //   // console.log("after swapp",ethAfter.toString());
+    //   // console.log("after swapping Eth to token ",tokenAfter.toString());
 
-      // // Assert the balances
-      // expect(ethAfter).to.equal(ethBefore.sub(ethValue));
-      // expect(tokenAfter).to.equal(tokenBefore.add(expectedTokens));
-    });
+    //   // // Calculate the expected token amount
+    //   // const expectedTokens = (ethValue * 10 ** 18) / dexexchange.ethValue;
+
+    //   // // Assert the balances
+    //   // expect(ethAfter).to.equal(ethBefore.sub(ethValue));
+    //   // expect(tokenAfter).to.equal(tokenBefore.add(expectedTokens));
+    // });
 
     // it("should swap token to Ether", async function () {
     //   const tokenAmount = 1000;

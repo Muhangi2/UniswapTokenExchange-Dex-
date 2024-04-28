@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-import "hardhat/console.sol";
+
 
 contract CustomToken is ERC20 {
     constructor(
@@ -96,7 +96,6 @@ contract DEXExchange {
         uint256 inputValue = msg.value;
         uint256 outputValue = (inputValue * 10 ** 18) / ethValue;
 
-       console.log("Ether to Token",outputValue);
         require(tokenInstanceMap[tokenName].transfer(msg.sender, outputValue));
         string memory etherToken = "Ether";
 
