@@ -17,8 +17,9 @@ describe("CustomToken & DexExchange", function () {
 
     CustomToken = await ethers.getContractFactory("CustomToken");
     customToken = await CustomToken.deploy(tokenName, TokenSymbol);
-    console.log("CustomToken beforeee to.............", customToken.address);
+    console.log("CustomToken beforeee to.............", customToken);
     await customToken.deployed();
+    
     console.log("CustomToken deployed to:............", customToken.address);
     DEXexchange = await ethers.getContractFactory("DEXExchange");
     dexexchange = await DEXexchange.deploy();
