@@ -1,7 +1,40 @@
-import React from "react";
+import React, { Component } from "react";
+import "../styles/globals.css";
+import merge from "lodash/merge";
+import "@rainbow-me/rainbowkit/styles.css";
+import {
+  getDefaultConfig,
+  RainbowKitProvider,
+  darkTheme,
+  midnightTheme,
+} from "@rainbow-me/rainbowkit";
 
-const _app = () => {
-  return <div>_app</div>;
-};
+import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
+import { infuraProvider } from "wagmi/providers/infura";
 
-export default _app;
+const { chains, provider } = configureChains(
+  [chains.amoy],
+  [infuraProvider({ apiKey: "", priority: 1 })]
+);
+
+const { connectors } = createClient({
+  autoConnect: true,
+  connectors,
+  provider,
+});
+
+const myTheme = merge(midnightTheme(), {
+  colors: {
+    accentColor: "#18181b",
+    accentColorForeground: "#fff",
+  },
+});
+
+function MyApp({ Component, pageProps }) {
+  <WagmiConfig>
+    <RainbowKitProvider>
+      <Component {...pageProps} />
+    </RainbowKitProvider>
+  </WagmiConfig>;
+}
+export default MyApp;
