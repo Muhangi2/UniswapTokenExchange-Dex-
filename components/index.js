@@ -8,7 +8,7 @@ import SwapComponent from "./SwapComponent";
 import SwapField from "./SwapField";
 import Table from "./Table";
 import TokenBalance from "./TokenBalance";
-import TransacationStatus from "./TransacationStatus";
+// import TransacationStatus from "./TransacationStatus";
 
 //we need to import svg as well
 import Facebook from "./SVG/Facebook";
@@ -27,7 +27,7 @@ export {
   SwapComponent,
   SwapField,
   Table,
-  //the images
+  //the images8
   Facebook,
   Insta,
   Logo,

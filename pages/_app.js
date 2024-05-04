@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import "../styles/globals.css";
 import merge from "lodash/merge";
 import "@rainbow-me/rainbowkit/styles.css";
@@ -13,7 +13,7 @@ import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { infuraProvider } from "wagmi/providers/infura";
 
 const { chains, provider } = configureChains(
-  [chains.amoy],
+  [chain.amoy],
   [infuraProvider({ apiKey: "", priority: 1 })]
 );
 
