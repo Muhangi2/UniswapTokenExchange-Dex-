@@ -134,7 +134,7 @@ export async function getAllHistory() {
     return parseFloatErrorMsg(error);
   }
 }
-function toWei(amount) {
+function toWe(amount) {
   const towei = ethers.utils.parseUnits(amount.toString());
   return towei.toString();
 }

@@ -4,10 +4,10 @@ import { Header, Footer, HeroSection, Card } from "../components/index";
 const Home = () => {
   return (
     <div className="bg-[#1A1A1A]">
-      {/* <Header />
-      <HeroSection />
+      <Header />
+      {/* <HeroSection />
       <Card />
-      <Footer /> */}
+      <Footer />  */}
     </div>
   );
 };
