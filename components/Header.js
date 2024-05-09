@@ -6,7 +6,8 @@ import { Menu, Logo, TokenBalance } from "./index";
 
 const Header = () => {
   const [tokenBalcamp, setTokenBalCamp] = useState();
-  const address = useAccount();
+  const { address } = useAccount();
+  console.log(address, "address...........");
 
   const notifyConnectWallet = () => {
     toast.error("Connect wallet", { duration: 2000 });
@@ -74,8 +75,8 @@ const Header = () => {
           </ul>
         </div>
         <div className="items-center flex-shrink-0 hidden lg:flex">
-          <TokenBalance />
-          <TokenBalance />
+          <TokenBalance name={"USD COIN"} walletAddress={address} />
+          <TokenBalance name={"SHIBA INU"} walletAddress={address} />
           <ConnectButton />
         </div>
         <button className="p-4 lg:hidden">

@@ -1,6 +1,6 @@
 import Card from "./Card";
 import Footer from "./Footer";
-import Headeer from "./Header";
+import Header from "./Header";
 import HeroSection from "./HeroSection";
 import Selector from "./Selector";
 import SingleCard from "./SingleCard";
@@ -20,17 +20,17 @@ import Menu from "./SVG/Menu";
 export {
   Card,
   Footer,
-  Headeer,
+  Header,
   HeroSection,
   Selector,
   SingleCard,
   SwapComponent,
   SwapField,
   Table,
-  //the images8
   Facebook,
   Insta,
   Logo,
   Twitter,
   Menu,
+  TokenBalance,
 };

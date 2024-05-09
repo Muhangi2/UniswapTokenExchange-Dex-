@@ -53,10 +53,10 @@ export async function swapTokenToToken(tokenName, amount, tokenName2) {
     return parseFloatErrorMsg(error);
   }
 }
-export async function getTokenBalance(tokenName, toeknaddress) {
+export async function getTokenBalance(tokenName, tokenaddress) {
   try {
     const DexExchange = await DexExchange();
-    const data = await DexExchange.getTokenBalance(tokenName, toeknaddress);
+    const data = await DexExchange.getTokenBalance(tokenName, tokenaddress);
     const receipt = await data.await();
     return receipt;
   } catch (error) {
