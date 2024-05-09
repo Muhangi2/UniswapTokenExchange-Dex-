@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
-import CustomToken from "./utils/CustomToken.json";
-import DexExchange from "./utils/DexExchange.json";
+import CustomToken from "./utils";
+import dexExchange from "./utils";
 
 export const tokencontract = async (address) => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -18,7 +18,7 @@ export const DexExchange=async()=>{
     const { ethereum } = window;
     if (ethereum) {
         const signer = provider.getSigner();
-        const dexcontract = new ethers.Contract("", DexExchange.abi, signer);
+        const dexcontract = new ethers.Contract("", dexExchange.abi, signer);
         return dexcontract;
     }
 }
