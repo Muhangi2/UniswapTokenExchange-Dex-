@@ -8,7 +8,7 @@ import SwapComponent from "./SwapComponent";
 import SwapField from "./SwapField";
 import Table from "./Table";
 import TokenBalance from "./TokenBalance";
-// import TransacationStatus from "./TransacationStatus";
+import TransactionStatus from "./TransactionStatus";
 
 //we need to import svg as well
 import Facebook from "./SVG/Facebook";
@@ -33,4 +33,5 @@ export {
   Twitter,
   Menu,
   TokenBalance,
+  TransactionStatus,
 };
