@@ -98,10 +98,10 @@ const SwapComponent = () => {
         />
       </div>
       <div className="bg-[#212429] p-4 py-6 rounded-xl mt-2 border-[2px] border-transparent hover:border-zinc-600">
-        <SwapField {...srcTokenObj} inputRef={inputValueRef} />
+        <SwapField TokenObj={srcToken} inputRef={inputValueRef} />
       </div>
       <div className="bg-[#212429] p-4 py-6 rounded-xl mt-2 border-[2px] border-transparent hover:border-zinc-600">
-        <SwapField {...deskTokenObj} inputRef={outputValueRef} />
+        <SwapField TokenObj={deskTokenObj} inputRef={outputValueRef} />
       </div>
       <button
         className={getSwapBtnClassName()}
