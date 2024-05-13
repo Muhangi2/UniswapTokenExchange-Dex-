@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, Fragment } from "react";
 import { Loading } from "@nextui-org/react";
 import { Transition, Dialog } from "@headlessui/react";
+import { toString } from "lodash";
 
-export default TransactionStatus = () => {
+const TransactionStatus = () => {
   const [isOpen, setIsOpen] = useState(false);
   function handleClose() {
     setIsOpen(true);
@@ -59,3 +60,4 @@ export default TransactionStatus = () => {
     </Transition.Root>
   );
 };
+export default TransactionStatus

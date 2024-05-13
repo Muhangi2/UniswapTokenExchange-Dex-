@@ -5,7 +5,6 @@ import {
   swapEthToken,
   swapTokenToEth,
   swapTokenToToken,
-  swapTokenToToken,
 } from "../utils/context";
 import { CogIcon, ArrowSmDownIcon } from "@heroicons/react/outline";
 import SwapField from "./SwapField";
@@ -18,11 +17,13 @@ import { use } from "chai";
 import { populate } from "dotenv";
 
 const SwapComponent = () => {
+  const address = useAccount();
+  console.log(address);
   const [srcToken, setsrcToken] = useState(ETH);
   const [destToken, setDeskToken] = useState(DEFAULT_VALUE);
 
-  const [inputValue, setInputValue] = useState();
-  const [outputValue, setOutPutvalue] = useState();
+  const [inputValue, setInputValue] = useState("");
+  const [outputValue, setOutPutvalue] = useState("");
 
   const inputValueRef = useRef();
   const outputValueRef = useRef();
@@ -42,6 +43,7 @@ const SwapComponent = () => {
     ignoreValue: destToken,
     setToken: setsrcToken,
   };
+
   const deskTokenObj = {
     id: "deskToken",
     value: outputValue,
@@ -50,8 +52,6 @@ const SwapComponent = () => {
     ignoreValue: srcToken,
     setToken: setDeskToken,
   };
-  const [srcTokenCamp, setTokenCamp] = useState();
-  const [destTokenCamp, setDeskTokenCamp] = useState();
 
   const [swapBtnText, setSwapBtnText] = useState(ENTER_AMOUNT);
   const [txtpending, settxtpending] = useState(false);
@@ -72,9 +72,6 @@ const SwapComponent = () => {
       !isReversed.current
     )
       populateOutputValue(inputValue);
-    setTokenCamp(<SwapField obj={srcTokenObj} ref={inputValueRef} />);
-
-    if (inputValue?.length === 0) setOutPutvalue("");
   }, [inputValue, destToken]);
 
   //another useeffect
@@ -85,11 +82,7 @@ const SwapComponent = () => {
       !isReversed.current
     )
       populateOutputValue(outputValue);
-    setTokenCamp(<SwapField obj={deskTokenObj} ref={outputValueRef} />);
-
-    if (outputValue?.length === 0) setInputValue("");
-    if (isReversed.current) isReversed.current = false;
-  }, [inputValue, srcToken]);
+  }, [outputValue, srcToken]);
 
   return (
     <div className="border-[1px] rounded-l border-[#7765f3] bg-[#7765F3] W-[100%] p-4 px-6 rounded-xl">
@@ -105,7 +98,10 @@ const SwapComponent = () => {
         />
       </div>
       <div className="bg-[#212429] p-4 py-6 rounded-xl mt-2 border-[2px] border-transparent hover:border-zinc-600">
-        {deskTokenObj}
+        <SwapField {...srcTokenObj} inputRef={inputValueRef} />
+      </div>
+      <div className="bg-[#212429] p-4 py-6 rounded-xl mt-2 border-[2px] border-transparent hover:border-zinc-600">
+        <SwapField {...deskTokenObj} inputRef={outputValueRef} />
       </div>
       <button
         className={getSwapBtnClassName()}
