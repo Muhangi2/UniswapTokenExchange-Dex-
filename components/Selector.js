@@ -25,21 +25,46 @@ const Selector = ({ defaultValue, ignoreValue, setToken, id }) => {
     { key: COIN_7, name: COIN_7 },
     { key: COIN_8, name: COIN_8 },
   ];
-  const [selectedItem,setSelectedItem]=useState();
-  const [menuItems,setMenuItems]=useState(getFilteredItems(ignoreValue));
-  function getFilteredItems(ignoreValue){
-    return menu.filter((item)=>item["key"]!==ignoreValue);
+  const [selectedItem, setSelectedItem] = useState();
+  const [menuItems, setMenuItems] = useState(getFilteredItems(ignoreValue));
+  function getFilteredItems(ignoreValue) {
+    return menu.filter((item) => item["key"] !== ignoreValue);
   }
 
-
-  useEffect(()=>{
+  useEffect(() => {
     setSelectedItem(defaultValue);
-  },[defaultValue]);
+  }, [defaultValue]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setMenuItems(getFilteredItems(ignoreValue));
-  })
-  return <div>Selector</div>;
+  });
+  return (
+    <Dropdown>
+      <Dropdown.Button
+        css={{
+          backgroundColor:
+            selectedItem === DEFAULT_VALUE ? "#7765F3" : "#2c2f36",
+        }}
+      >
+        {selectedItem}
+      </Dropdown.Button>
+      <Dropdown.Menu
+        aria-label="Dynamic Actions"
+        items={menuItems}
+        onAction={(key) => {
+          setSelectedItem(key);
+          setToken(key);
+        }}
+      >
+        {(item)=>(<Dropdown.Item 
+           aria-label={id}
+           key={item.key}
+           color={item.key==="delete"?"error":"default"}
+        
+        >{item.name}</Dropdown.Item>)}
+      </Dropdown.Menu>
+    </Dropdown>
+  );
 };
 
 export default Selector;
