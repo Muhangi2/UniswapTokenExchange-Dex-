@@ -8,7 +8,7 @@ const Home = () => {
       <Header />
       <HeroSection />
       <Card />
-      {/* <Footer />  */}
+      <Footer /> 
     </div>
   );
 };
