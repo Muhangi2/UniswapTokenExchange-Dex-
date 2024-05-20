@@ -6,10 +6,10 @@ import {
 } from "../utils/context";
 import { ethers } from "ethers";
 import TransactionStatus from "./TransactionStatus";
-import { ClipboardIcon } from "@heroicons/react/outline";
+import { ClipboardCheckIcon, ClipboardIcon } from "@heroicons/react/outline";
 import toast, { Toaster } from "react-hot-toast";
 
-const SingleCard = ({ name, walletAddress }) => {
+const SingleCard = ({ name, walletAddress,index }) => {
   const [balance, setbalance] = useState("-");
   const [tokenaddress, settokenaddress] = useState("-");
   const [copyIcon, setcopyIcon] = useState({ icon: ClipboardIcon });
@@ -34,10 +34,53 @@ const SingleCard = ({ name, walletAddress }) => {
     settokenaddress(address);
   }
 
-  return <article className="flex flex-col bg-[#212429]">
-
-
-  </article>;
+  return (
+    <article className="flex flex-col bg-[#212429]">
+      <a
+        rel="nopener noreferrer"
+        href="#"
+        aria-label="Te nulla oportere reprimique his dolorum"
+      >
+        <img
+          alt=""
+          className="object-cover w-full h-62 bg-gray-500"
+          src={`img/${index + 1}.png`}
+        />
+      </a>
+      <a
+        rel="noopener noreferrer"
+        href="#"
+        aria-label="Te nulla oportere reprimique his dolorum"
+      ></a>
+      <a
+        rel="noopener noreferrer"
+        href="#"
+        aria-label="text-xs  tracki uppercase hover:underline text-[#7765F3]"
+      >
+        {name}10 M supply
+      </a>
+      <h3 className="flex-1 py-2 text-lg font-semibold leading-4 ">
+        Get{name}token,limited supply available
+      </h3>
+      <div className="flex mx-2 pt-[10px]">
+        <div className="flex items-center bg-zinc-900 text-zinc-300 w-fit p-2 px-3 rounded-l-lg">
+          <p className="text-sm">{name}</p>
+          <p className="bg-zinc-800 p-0.5 px-3 ml-3 rounded-lg text-zinc-100 ">
+            {balance}
+          </p>
+        </div>
+      </div>
+      <div className="flex items-center p-2 px-2 bg-[#7765F3] rounded-r-lg">
+        <copyIcon.icon
+          className="h-6 cursor-pointer "
+          onClick={() => {
+            navigator.clipboard.writeText(tokenaddress);
+            setcopyIcon({ icon: ClipboardCheckIcon });
+          }}
+        />
+      </div>
+    </article>
+  );
 };
 
 export default SingleCard;
