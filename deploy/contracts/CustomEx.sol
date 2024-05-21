@@ -55,7 +55,7 @@ contract DEXExchange {
         address _address
     ) public view returns (uint256) {
         return tokenInstanceMap[tokenName].balanceOf(_address);
-    }
+    };
     function getTotalSupply(
         string memory tokenName
     ) public view returns (uint256) {
