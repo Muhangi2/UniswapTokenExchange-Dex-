@@ -1,15 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
+import { ethers } from "ethers";
 import {
   getTokenAddress,
   getTokenBalance,
   increaseAllowance,
 } from "../utils/context";
-import { ethers } from "ethers";
 import TransactionStatus from "./TransactionStatus";
 import { ClipboardCheckIcon, ClipboardIcon } from "@heroicons/react/outline";
 import toast, { Toaster } from "react-hot-toast";
 
-const SingleCard = ({ name, walletAddress,index }) => {
+
+const SingleCard = ({ name, walletAddress, index }) => {
+  console.log(name, walletAddress, index,"name, walletAddresrrs, index")
   const [balance, setbalance] = useState("-");
   const [tokenaddress, settokenaddress] = useState("-");
   const [copyIcon, setcopyIcon] = useState({ icon: ClipboardIcon });
@@ -24,10 +26,23 @@ const SingleCard = ({ name, walletAddress,index }) => {
       fetchTokenaddress();
     } else setbalance("-");
   }, [name, walletAddress]);
+
   async function fetchBalance() {
-    const balance = await getTokenBalance(name, walletAddress);
-    const fbal = ethers.utils.formatUnits(balance.toString(), 18);
-    setbalance(balance.toString());
+    try {
+      const balance = await getTokenBalance(name, walletAddress);
+      console.log(balance);
+      
+      if (balance !== null && balance !== undefined) {
+        const fbal = ethers.utils.parseUnits(balance.toString(), 18);
+        setbalance(fbal.toString());
+      } else {
+        console.error('Balance is null or undefined');
+        setbalance('0'); // Or handle this case as needed
+      }
+    } catch (error) {
+      console.error('Error fetching balance:', error);
+      setbalance('0'); // Or handle this case as needed
+    }
   }
   async function fetchTokenaddress() {
     const address = await getTokenAddress(name);

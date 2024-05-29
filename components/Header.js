@@ -7,7 +7,8 @@ import { Menu, Logo, TokenBalance } from "./index";
 const Header = () => {
   const [tokenBalcamp, setTokenBalCamp] = useState();
   const { address } = useAccount();
-  console.log(address, "address...........");
+
+  console.log(address, "address.............................on herader");
 
   const notifyConnectWallet = () => {
     toast.error("Connect wallet", { duration: 2000 });

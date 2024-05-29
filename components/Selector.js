@@ -14,6 +14,7 @@ import {
 } from "../utils/saleToken";
 
 const Selector = ({ defaultValue, ignoreValue, setToken, id }) => {
+  console.log(setToken,"settokenn")
   const menu = [
     { key: ETH, name: ETH },
     { key: COIN_1, name: COIN_1 },
@@ -37,7 +38,7 @@ const Selector = ({ defaultValue, ignoreValue, setToken, id }) => {
 
   useEffect(() => {
     setMenuItems(getFilteredItems(ignoreValue));
-  });
+  },[]);
   return (
     <Dropdown>
       <Dropdown.Button
