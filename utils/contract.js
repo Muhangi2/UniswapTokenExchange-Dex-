@@ -18,7 +18,7 @@ export const DexExchange = async () => {
   if (ethereum) {
     const signer = provider.getSigner();
     const dexcontract = new ethers.Contract(
-      "0x63cb9ccd97F8562CB1F4F1B7c63036DE198F9C33",
+      "0x5FbDB2315678afecb367f032d93F642f64180aa3",
       dexExchange.abi,
       signer
     );

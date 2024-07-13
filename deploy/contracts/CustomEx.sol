@@ -4,8 +4,6 @@ pragma solidity ^0.8.0;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-
-
 contract CustomToken is ERC20 {
     constructor(
         string memory tokenName,
@@ -14,7 +12,6 @@ contract CustomToken is ERC20 {
         _mint(msg.sender, 1000000 * 10 ** 18);
     }
 }
-
 
 contract DEXExchange {
     string[] public tokens = [
@@ -44,36 +41,41 @@ contract DEXExchange {
 
     //constructor to create the the tokens by default
     constructor() {
-    
         for (uint256 i = 0; i < tokens.length; i++) {
             CustomToken token = new CustomToken(tokens[i], tokens[i]);
             tokenInstanceMap[tokens[i]] = token;
         }
     }
+
     function getBalance(
         string memory tokenName,
         address _address
     ) public view returns (uint256) {
         return tokenInstanceMap[tokenName].balanceOf(_address);
     }
+
     function getTotalSupply(
         string memory tokenName
     ) public view returns (uint256) {
         return tokenInstanceMap[tokenName].totalSupply();
     }
+
     function getName(
         string memory tokenName
     ) public view returns (string memory) {
         return tokenInstanceMap[tokenName].name();
     }
+
     function getTokenAddress(
         string memory tokenName
     ) public view returns (address) {
         return address(tokenInstanceMap[tokenName]);
     }
+
     function getEthBalance() public view returns (uint256) {
         return address(this).balance;
     }
+
     function _transationHistory(
         string memory tokenName,
         string memory etherToken,
@@ -91,6 +93,7 @@ contract DEXExchange {
         _history.inputValue = inputValue;
         _history.outputValue = outputValue;
     }
+
     function swapEthToToken(
         string memory tokenName
     ) public payable returns (uint256) {
@@ -102,7 +105,6 @@ contract DEXExchange {
 
         _transationHistory(tokenName, etherToken, inputValue, outputValue);
         return outputValue;
-        
     }
 
     function swapTokenToEth(
@@ -134,6 +136,7 @@ contract DEXExchange {
         );
         return ethToBeTransfered;
     }
+
     function swapTokenToToken(
         string memory srcTokenName,
         string memory destTokenName,
@@ -149,6 +152,7 @@ contract DEXExchange {
         require(tokenInstanceMap[destTokenName].transfer(msg.sender, _amount));
         _transationHistory(srcTokenName, destTokenName, _amount, _amount);
     }
+
     function getAllHistory() public view returns (History[] memory) {
         uint256 itemCount = historyIndex;
         uint256 currentIndex = 0;
@@ -160,6 +164,6 @@ contract DEXExchange {
             items[currentIndex] = currentItem;
             currentIndex += 1;
         }
-        return  items;
+        return items;
     }
 }
