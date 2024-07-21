@@ -50,7 +50,7 @@ const SingleCard = ({ name, walletAddress, index }) => {
   }
 
   return (
-    <article className="flex flex-col bg-[#212429]">
+    <article className="flex flex-col bg-[#212429] p-4">
       <a
         rel="nopener noreferrer"
         href="#"
@@ -74,8 +74,8 @@ const SingleCard = ({ name, walletAddress, index }) => {
       >
         {name}10 M supply
       </a>
-      <h3 className="flex-1 py-2 text-lg font-semibold leading-4 ">
-        Get{name}token,limited supply available
+      <h3 className="flex-1 py-4 text-lg font-semibold leading-4 ">
+        Get {name} token,limited supply available
       </h3>
       <div className="flex mx-2 pt-[10px]">
         <div className="flex items-center bg-zinc-900 text-zinc-300 w-fit p-2 px-3 rounded-l-lg">
@@ -85,7 +85,7 @@ const SingleCard = ({ name, walletAddress, index }) => {
           </p>
         </div>
       </div>
-      <div className="flex items-center p-2 px-2 bg-[#7765F3] rounded-r-lg">
+      <div className="flex items-center mt-3 p-2 px-2 bg-[#7765F3] rounded-r-lg">
         <copyIcon.icon
           className="h-6 cursor-pointer "
           onClick={() => {

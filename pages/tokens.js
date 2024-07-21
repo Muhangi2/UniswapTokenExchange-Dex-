@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { Table, Header, Footer } from "../components/index";
 import { getAllHistory } from "../utils/context";
 
@@ -7,7 +7,7 @@ const tokens = () => {
   //getting the data
   const loadData = async () => {
     const data = await getAllHistory();
-    setHistory(data.reverse());
+    setHistory(data?.reverse());
   };
   useEffect(() => {
     loadData();

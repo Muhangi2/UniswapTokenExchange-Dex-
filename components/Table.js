@@ -20,7 +20,7 @@ const Table = ({ history }) => {
             </tr>
           </thead>
           <tbody>
-            {history.map((item, index) => (
+            {history?.map((item, index) => (
               <tr key={index}>
                 <td className="border px-4 py-2">{item.historyId}</td>
                 <td className="border px-4 py-2">{item.userAddress}</td>

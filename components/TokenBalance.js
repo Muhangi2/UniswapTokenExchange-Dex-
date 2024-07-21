@@ -1,26 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import toast, { Toaster } from "react-hot-toast";
-import {
-  ClipboardIcon,
-  ClipboardCheckIcon,
-  PlusIcon,
-} from "@heroicons/react/outline";
+import { ClipboardIcon, ClipboardCheckIcon } from "@heroicons/react/outline";
 import { TransactionStatus } from "./index";
-import {
-  getTokenAddress,
-  getTokenBalance,
-  increaseAllowance,
-} from "./../utils/context";
+import { getTokenAddress, getTokenBalance } from "./../utils/context";
 
 const TokenBalance = ({ name, walletAddress }) => {
   const [balance, setbalance] = useState("-");
-  const [tokenaddress, settokenaddress] = useState();
-  const [copyIcon, setcopyIcon] = useState({ icon: ClipboardIcon });
+  const [tokenaddress, settokenaddress] = useState("");
+  const [copyIcon, setcopyIcon] = useState(ClipboardIcon); // Initialize with the default icon
   const [txtpending, settxtpending] = useState(false);
 
   const notifyError = (msg) => toast.error(msg, { duration: 6000 });
-  const notifuSuccess = () => toast.success("Transaction completed");
+  const notifySuccess = () => toast.success("Transaction completed");
 
   useEffect(() => {
     if (name && walletAddress) {
@@ -38,6 +30,7 @@ const TokenBalance = ({ name, walletAddress }) => {
 
     setbalance(fbal.toString());
   }
+
   async function fetchTokenAddress() {
     const address = await getTokenAddress(name);
     settokenaddress(address);
@@ -52,11 +45,12 @@ const TokenBalance = ({ name, walletAddress }) => {
         </p>
       </div>
       <div className="flex items-center p-2 px-2 bg-[#7765F3] rounded-r-lg">
-        <copyIcon.icon
+        <copyIcon
           className="h-6 cursor-pointer"
           onClick={() => {
             navigator.clipboard.writeText(tokenaddress);
-            setcopyIcon();
+            setcopyIcon(ClipboardCheckIcon); // Change icon after copying
+            toast.success("Address copied to clipboard!");
           }}
         />
       </div>
