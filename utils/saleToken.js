@@ -1,4 +1,4 @@
-export const ETH = "Ethh";
+export const ETH = "Eth";
 export const COIN_1 = "Tether USD";
 export const COIN_2 = "USD Coin";
 export const COIN_3 = "BNB";

@@ -11,7 +11,6 @@ import toast, { Toaster } from "react-hot-toast";
 
 
 const SingleCard = ({ name, walletAddress, index }) => {
-  console.log(name, walletAddress, index,"name, walletAddresrrs, index")
   const [balance, setbalance] = useState("-");
   const [tokenaddress, settokenaddress] = useState("-");
   const [copyIcon, setcopyIcon] = useState({ icon: ClipboardIcon });
@@ -30,17 +29,17 @@ const SingleCard = ({ name, walletAddress, index }) => {
   async function fetchBalance() {
     try {
       const balance = await getTokenBalance(name, walletAddress);
-      console.log(balance);
+     
       
       if (balance !== null && balance !== undefined) {
         const fbal = ethers.utils.parseUnits(balance.toString(), 18);
         setbalance(fbal.toString());
       } else {
-        console.error('Balance is null or undefined');
+       
         setbalance('0'); // Or handle this case as needed
       }
     } catch (error) {
-      console.error('Error fetching balance:', error);
+      
       setbalance('0'); // Or handle this case as needed
     }
   }

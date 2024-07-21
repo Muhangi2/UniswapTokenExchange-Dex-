@@ -1,7 +1,7 @@
 import React from "react";
 import Selector from "./Selector";
 
-const SwapField = React.forwardRef((TokenObj, inputRef) => {
+const SwapField = React.forwardRef(({TokenObj}, inputRef) => {
   const {
     id,
     value = "",
@@ -10,6 +10,7 @@ const SwapField = React.forwardRef((TokenObj, inputRef) => {
     setToken,
     ignoreValue,
   } = TokenObj;
+
 
   return (
     <div className="flex items-center rounded-xl">

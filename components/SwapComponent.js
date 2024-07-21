@@ -53,6 +53,8 @@ const SwapComponent = () => {
     setToken: setDeskToken,
   };
 
+  const [srcTokenComp, setSrcTokenComp] = useState();
+  const [destTokenCamp, setDestTokenComp] = useState();
   const [swapBtnText, setSwapBtnText] = useState(ENTER_AMOUNT);
   const [txtpending, settxtpending] = useState(false);
 
@@ -72,6 +74,8 @@ const SwapComponent = () => {
       !isReversed.current
     )
       populateOutputValue(inputValue);
+    setSrcTokenComp(<SwapField obj={srcTokenObj} ref={inputValueRef} />);
+    if (inputValue?.length === 0) setOutPutvalue("");
   }, [inputValue, destToken]);
 
   //another useeffect
@@ -82,12 +86,16 @@ const SwapComponent = () => {
       !isReversed.current
     )
       populateOutputValue(outputValue);
+    setDestTokenComp(<SwapField obj={deskTokenObj} ref={outputValueRef} />);
+    if (outputValue?.length === 0) setInputValue("");
+    //resetting the reversed
+    if (isReversed?.current) isReversed.current = false;
   }, [outputValue, srcToken]);
 
   return (
-    <div className="border-[1px] rounded-l border-[#7765f3] bg-[#7765F3] W-[100%] p-4 px-6 rounded-xl">
+    <div className="border-[1px] rounded-l border-[#d1f1be] bg-[#d1f1be] W-[100%] p-4 px-6 rounded-xl">
       <div className="flex items-center justify-between py-4 px-1">
-        <p>Swap</p>
+        <p className="text-[#212429]">Swap</p>
         <CogIcon className="h-6" />
       </div>
       <div className="relative bg-[#212429] p-4 py-6 rounded-xl mb-2 border-[2px] border-transparent hover:border-zinc-600">
@@ -98,7 +106,7 @@ const SwapComponent = () => {
         />
       </div>
       <div className="bg-[#212429] p-4 py-6 rounded-xl mt-2 border-[2px] border-transparent hover:border-zinc-600">
-        <SwapField TokenObj={srcToken} inputRef={inputValueRef} />
+        <SwapField TokenObj={srcTokenObj} inputRef={inputValueRef} />
       </div>
       <div className="bg-[#212429] p-4 py-6 rounded-xl mt-2 border-[2px] border-transparent hover:border-zinc-600">
         <SwapField TokenObj={deskTokenObj} inputRef={outputValueRef} />
@@ -153,7 +161,7 @@ const SwapComponent = () => {
     let className = "p-4 w-full my-2 rounded-xl";
     className +=
       swapBtnText === ENTER_AMOUNT || swapBtnText === CONNECT_WALLET
-        ? "text-zinc-400 bg-zinc-800 pointer-events"
+        ? "text-white bg-black pointer-events"
         : "bg-blue-700";
     className += swapBtnText === INCREASE_ALLOWANCE ? "bg-yellow-600" : "";
     return className;
@@ -205,7 +213,7 @@ const SwapComponent = () => {
     let receipt;
     if (srcToken === ETH && destToken !== ETH)
       receipt = await swapEthToken(destToken, inputValue);
-    else if (srcToken !== ETH && destTokenn == ETH)
+    else if (srcToken !== ETH && destToken == ETH)
       receipt = await swapTokenToEth(srcToken, inputValue);
     else receipt = await swapTokenToToken(srcToken, destToken, inputValue);
     settxtpending(false);

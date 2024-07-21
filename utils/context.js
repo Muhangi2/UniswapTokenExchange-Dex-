@@ -19,7 +19,10 @@ export async function hasValidAllowance(owner, tokenName, amount) {
     const address = await dexcontract.getTokenAddress(tokenName);
 
     const tokencontract = await tokencontract(address);
-    const data = await tokencontract.allowance(owner, "43587834");
+    const data = await tokencontract.allowance(
+      owner,
+      "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+    );
 
     const result = BigNumber.from(data.toString()).gte(
       BigNumber.from(toWei(amount))
